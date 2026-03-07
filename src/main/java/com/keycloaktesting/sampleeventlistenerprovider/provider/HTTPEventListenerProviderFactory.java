@@ -19,7 +19,7 @@ public class HTTPEventListenerProviderFactory implements EventListenerProviderFa
 
     @Override
     public void init(Config.Scope config) {
-        serverUri = config.get("serverUri", "http://localhost:8888/api/v1/keycloak/registration");
+        serverUri = config.get("serverUri", "http://api:8888/api/v1/keycloak/registration");
         username = config.get("username", null);
         password = config.get("password", null);
         topic = config.get("topic", "keycloak/events");
