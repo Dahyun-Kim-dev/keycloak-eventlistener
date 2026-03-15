@@ -15,8 +15,10 @@ import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
+import org.keycloak.models.KeycloakSession;
 
 import okhttp3.*;
+import org.keycloak.models.UserModel;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,12 +29,16 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
 
     private final String serverUri;
     private final String clientId = "konsultfy-event-listener";
-    private final String clientSecret = "vBbt05cBxJ8qSZESRHx66SGpafuerH5g";
+    private final String clientSecret = "8ge5ABspoi7hj1x3TDk4pEHEqildt6ie";
     private final String tokenUrl =
             "http://keycloak:8080/realms/konsultfy/protocol/openid-connect/token";
+    private final KeycloakSession session;
 
-    public HTTPEventListenerProvider(String serverUri, String username, String password, String topic) {
+    //private static final CloseableHttpClient client = HttpClients.createDefault();
+
+    public HTTPEventListenerProvider(String serverUri, String username, String password, String topic, KeycloakSession session) {
         this.serverUri = serverUri;
+        this.session = session;
     }
 
     @Override
@@ -43,7 +49,6 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
         System.out.println("EVENT REGISTER DETECTED!");
 
         try {
-
             String token = fetchAccessToken();
 
             ObjectMapper mapper = new ObjectMapper();
@@ -51,14 +56,25 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
 
             payload.put("eventType", event.getType());
             payload.put("id", event.getUserId());
-            payload.put("type", event.getDetails().get("type"));
-            payload.put("email", event.getDetails().get("email"));
-            payload.put("firstName", event.getDetails().get("given_name"));
-            payload.put("lastName", event.getDetails().get("family_name"));
+
+            UserModel user = session.users().getUserById(
+                    session.getContext().getRealm(),
+                    event.getUserId()
+            );
+
+            payload.put("email", user.getEmail());
+            payload.put("firstName", user.getFirstName() != null ? user.getFirstName() : "");
+            payload.put("lastName", user.getLastName() != null ? user.getLastName() : "");
+
+            String type = user.getFirstAttribute("type");
+            if (type == null || type.isEmpty()) type = "PATRON";
+            payload.put("type", type);
 
             String json = mapper.writeValueAsString(payload);
 
             sendEvent(json, token);
+
+            System.out.println("Sending registration payload: " + json);
 
         } catch (Exception e) {
             System.out.println("UH OH!! " + e.getMessage());
@@ -87,7 +103,13 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(body);
 
-                return node.get("access_token").asText();
+                JsonNode tokenNode = node.get("access_token");
+
+                if (tokenNode == null) {
+                    throw new RuntimeException("Failed to fetch token: " + body);
+                }
+
+                return tokenNode.asText();
             }
         }
     }
@@ -112,8 +134,10 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void onEvent(AdminEvent event, boolean includeRepresentation) {}
+    public void onEvent(AdminEvent event, boolean includeRepresentation) {
+    }
 
     @Override
-    public void close() {}
+    public void close() {
+    }
 }

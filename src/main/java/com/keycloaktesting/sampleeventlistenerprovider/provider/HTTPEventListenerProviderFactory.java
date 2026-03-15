@@ -14,7 +14,7 @@ public class HTTPEventListenerProviderFactory implements EventListenerProviderFa
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new HTTPEventListenerProvider(serverUri, username, password, topic);
+        return new HTTPEventListenerProvider(serverUri, username, password, topic, session);
     }
 
     @Override
