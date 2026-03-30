@@ -29,9 +29,8 @@ public class HTTPEventListenerProvider implements EventListenerProvider {
 
     private final String serverUri;
     private final String clientId = "konsultfy-event-listener";
-    private final String clientSecret = "8ge5ABspoi7hj1x3TDk4pEHEqildt6ie";
-    private final String tokenUrl =
-            "http://keycloak:8080/realms/konsultfy/protocol/openid-connect/token";
+    private final String clientSecret = "UAr5bwzoiyvwBUGi9HKjwDK";
+    private final String tokenUrl = "http://localhost:8080/auth/realms/konsultfy/protocol/openid-connect/token";
     private final KeycloakSession session;
 
     //private static final CloseableHttpClient client = HttpClients.createDefault();
