@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="671fcde8-594f-43ec-91bc-e6be8dfc2b35" name="Changes" comment="fixes npe when triggering registration">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/keycloaktesting/sampleeventlistenerprovider/provider/HTTPEventListenerProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/keycloaktesting/sampleeventlistenerprovider/provider/HTTPEventListenerProvider.java" afterDir="false" />
+    <list default="true" id="671fcde8-594f-43ec-91bc-e6be8dfc2b35" name="Changes" comment="hard codes client secret">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/keycloaktesting/sampleeventlistenerprovider/provider/HTTPEventListenerProviderFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/keycloaktesting/sampleeventlistenerprovider/provider/HTTPEventListenerProviderFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773592163811</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="hard codes client secret">
+      <option name="closed" value="true" />
+      <created>1774873445613</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774873445613</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +134,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="adds keycloak client id and secret" />
     <MESSAGE value="fixes npe when triggering registration" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes npe when triggering registration" />
+    <MESSAGE value="hard codes client secret" />
+    <option name="LAST_COMMIT_MESSAGE" value="hard codes client secret" />
   </component>
 </project>
